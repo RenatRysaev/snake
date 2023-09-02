@@ -1,13 +1,9 @@
 import { Item } from "linked-list";
-
-export type CoordinateType = {
-  x: number;
-  y: number;
-};
+import { shared } from "../shared";
 
 export class Coordinate extends Item {
-  public readonly value: CoordinateType;
-  constructor(value: CoordinateType) {
+  public readonly value: shared.types.CoordinateType;
+  constructor(value: shared.types.CoordinateType) {
     super();
     this.value = value;
   }
