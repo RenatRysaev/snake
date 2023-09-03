@@ -14,6 +14,6 @@ export class Display {
       this.render();
 
       window.clearInterval(snakeInterval);
-    }, 20000);
+    }, 1000);
   }
 }

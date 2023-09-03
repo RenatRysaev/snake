@@ -1,9 +1,9 @@
-import { Controller } from "./controller";
-import { Game } from "./game";
-import { Display } from "./display";
-import { Snake } from "./snake";
-import { Coordinate } from "./coordinate";
 import { List } from "linked-list";
+import { ControllerFactory } from "./controller-factory";
+import { Game, GameController } from "./game";
+import { Display } from "./display";
+import { Snake, SnakeController } from "./snake";
+import { Coordinate } from "./coordinate";
 
 const initialSnakeCoordinates = List.from([
   new Coordinate({ x: 90, y: 30 }),
@@ -24,18 +24,13 @@ const snakeCtx = canvas.getContext("2d") as CanvasRenderingContext2D;
 const snake = new Snake(snakeCtx, initialSnakeCoordinates, 10);
 const display = new Display(snake);
 const game = new Game(display);
-const controller = new Controller(
-  document.getElementById("start-game") as HTMLButtonElement,
-  game,
-);
 
-controller.registerHandlers();
-/*
- * как оно должно работать
- * 1) по нажатию на кнопку старт - запускается игра
- * 2) при запуске игры должна происходить первоначальная отрисовка всех объектов в классе экрана(змея, еда, холст)
- * 3) затем после первоначальной отрисовки стартует игра:
- * - змея перманентно двигается
- * - когда корм едят, он должен появится в новом месте
- * - если змея столкнулась со стеной или сама с собой игра завершается
- * */
+const mainController = new ControllerFactory([
+  new GameController(
+    document.getElementById("start-game") as HTMLButtonElement,
+    game,
+  ),
+  new SnakeController(snake),
+]);
+
+mainController.registerHandlers();
