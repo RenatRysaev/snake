@@ -7,8 +7,11 @@ export class Figure {
     this.ctx = ctx;
   }
 
+  protected removePart({ x, y, width, height }: shared.types.FigureProps) {
+    this.ctx.clearRect(x, y, width, height);
+  }
+
   protected render({ x, y, width, height }: shared.types.FigureProps) {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.beginPath();
     this.ctx.rect(x, y, width, height);
     this.ctx.fillStyle = "green";

@@ -65,22 +65,30 @@ export class Snake extends Figure {
 
   private removeLastPart() {
     const tail = this.coordinates.tail;
-    tail?.detach();
+
+    if (tail) {
+      tail.detach();
+
+      this.removePart({
+        x: tail?.value.x,
+        y: tail?.value.y,
+        width: 10,
+        height: 10,
+      });
+    }
   }
 
   public move() {
     this.changeCoordinates();
     this.removeLastPart();
 
-    const snakeTailCoordinates = this.coordinates.tail?.value;
-
-    if (snakeTailCoordinates) {
+    this.coordinates.toArray().forEach((coordinate) => {
       this.render({
-        x: snakeTailCoordinates?.x,
-        y: snakeTailCoordinates?.y,
-        width: this.width,
-        height: this.height,
+        x: coordinate.value.x,
+        y: coordinate.value.y,
+        width: 10,
+        height: 10,
       });
-    }
+    });
   }
 }
