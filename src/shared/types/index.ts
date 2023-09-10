@@ -1,1 +1,1 @@
-export * as types from "./types.ts";
+export * as Types from "./types.ts";

@@ -1,11 +1,8 @@
-import { shared } from "../../shared";
+import { Shared } from "../../shared";
 import { Snake } from "../snake.ts";
-import {
-  MAP_ARROW_KEY_CODE_TO_DIRECTION,
-  ARROW_KEY_CODE,
-} from "./snake-controller.constants.ts";
+import * as LOCAL_CONSTANTS from "./snake-controller.constants.ts";
 
-export class SnakeController extends shared.types.AbstractController {
+export class SnakeController extends Shared.Types.AbstractController {
   private readonly snake: Snake;
 
   constructor(snake: Snake) {
@@ -16,25 +13,27 @@ export class SnakeController extends shared.types.AbstractController {
 
   private handleChangeDirection = (event: KeyboardEvent) => {
     const MAP_DIRECTION_TO_HANDLER = {
-      [shared.types.MoveDirection.Left]: () =>
-        this.snake.changeMoveDirection(shared.types.MoveDirection.Left),
-      [shared.types.MoveDirection.Top]: () =>
-        this.snake.changeMoveDirection(shared.types.MoveDirection.Top),
-      [shared.types.MoveDirection.Right]: () =>
-        this.snake.changeMoveDirection(shared.types.MoveDirection.Right),
-      [shared.types.MoveDirection.Bottom]: () =>
-        this.snake.changeMoveDirection(shared.types.MoveDirection.Bottom),
+      [Shared.Types.MoveDirection.Left]: () =>
+        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Left),
+      [Shared.Types.MoveDirection.Top]: () =>
+        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Top),
+      [Shared.Types.MoveDirection.Right]: () =>
+        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Right),
+      [Shared.Types.MoveDirection.Bottom]: () =>
+        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Bottom),
     };
 
     const pressedKeyCode = event.code;
 
     const isChangeDirectionKeyPressed = Object.keys(
-      MAP_ARROW_KEY_CODE_TO_DIRECTION,
+      LOCAL_CONSTANTS.MAP_ARROW_KEY_CODE_TO_DIRECTION,
     ).includes(pressedKeyCode);
 
     if (isChangeDirectionKeyPressed) {
       const selectedDirection =
-        MAP_ARROW_KEY_CODE_TO_DIRECTION[pressedKeyCode as ARROW_KEY_CODE];
+        LOCAL_CONSTANTS.MAP_ARROW_KEY_CODE_TO_DIRECTION[
+          pressedKeyCode as LOCAL_CONSTANTS.ARROW_KEY_CODE
+        ];
       const handler = MAP_DIRECTION_TO_HANDLER[selectedDirection];
 
       handler();

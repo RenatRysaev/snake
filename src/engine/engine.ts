@@ -1,6 +1,6 @@
 import { Snake } from "../snake";
 
-export class Display {
+export class Engine {
   private snake: Snake;
 
   constructor(snake: Snake) {

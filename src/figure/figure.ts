@@ -1,4 +1,4 @@
-import { shared } from "../shared";
+import { Shared } from "../shared";
 
 export class Figure {
   private ctx: CanvasRenderingContext2D;
@@ -7,11 +7,11 @@ export class Figure {
     this.ctx = ctx;
   }
 
-  protected removePart({ x, y, width, height }: shared.types.FigureProps) {
+  public removeDrewPart({ x, y, width, height }: Shared.Types.FigureProps) {
     this.ctx.clearRect(x, y, width, height);
   }
 
-  protected render({ x, y, width, height }: shared.types.FigureProps) {
+  public draw({ x, y, width, height }: Shared.Types.FigureProps) {
     this.ctx.beginPath();
     this.ctx.rect(x, y, width, height);
     this.ctx.fillStyle = "green";

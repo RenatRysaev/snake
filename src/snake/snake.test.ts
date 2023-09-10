@@ -1,21 +1,10 @@
 import { List } from "linked-list";
-import { Snake } from "./snake.ts";
 import { Coordinate } from "../coordinate";
-import { shared } from "../shared";
-
-const snakeStepSize = 10;
-
-export const createSnakeCtx = (): CanvasRenderingContext2D => {
-  const canvas = document.createElement("canvas");
-
-  return canvas.getContext("2d") as CanvasRenderingContext2D;
-};
+import { Shared } from "../shared";
 
 describe("class Snake", () => {
   describe("method 'move' should change coordinates correctly", () => {
     test("when direction is right", () => {
-      const snakeCtx = createSnakeCtx();
-
       const initialSnakeCoordinates = List.from([
         new Coordinate({ x: 20, y: 30 }),
         new Coordinate({ x: 10, y: 30 }),
@@ -28,9 +17,9 @@ describe("class Snake", () => {
         new Coordinate({ x: 20, y: 30 }),
       ]);
 
-      const snake = new Snake(snakeCtx, initialSnakeCoordinates, snakeStepSize);
+      const snake = Shared.TestUtils.snakeFactory(initialSnakeCoordinates);
 
-      snake.changeMoveDirection(shared.types.MoveDirection.Right);
+      snake.changeMoveDirection(Shared.Types.MoveDirection.Right);
 
       snake.move();
       snake.move();
@@ -44,8 +33,6 @@ describe("class Snake", () => {
     });
 
     test("when direction is left", () => {
-      const snakeCtx = createSnakeCtx();
-
       const initialSnakeCoordinates = List.from([
         new Coordinate({ x: 30, y: 30 }),
         new Coordinate({ x: 40, y: 30 }),
@@ -58,9 +45,9 @@ describe("class Snake", () => {
         new Coordinate({ x: 40, y: 30 }),
       ]);
 
-      const snake = new Snake(snakeCtx, initialSnakeCoordinates, snakeStepSize);
+      const snake = Shared.TestUtils.snakeFactory(initialSnakeCoordinates);
 
-      snake.changeMoveDirection(shared.types.MoveDirection.Left);
+      snake.changeMoveDirection(Shared.Types.MoveDirection.Left);
 
       snake.move();
 
@@ -73,8 +60,6 @@ describe("class Snake", () => {
     });
 
     test("when direction is top", () => {
-      const snakeCtx = createSnakeCtx();
-
       const initialSnakeCoordinates = List.from([
         new Coordinate({ x: 30, y: 30 }),
         new Coordinate({ x: 30, y: 40 }),
@@ -87,9 +72,9 @@ describe("class Snake", () => {
         new Coordinate({ x: 30, y: 30 }),
       ]);
 
-      const snake = new Snake(snakeCtx, initialSnakeCoordinates, snakeStepSize);
+      const snake = Shared.TestUtils.snakeFactory(initialSnakeCoordinates);
 
-      snake.changeMoveDirection(shared.types.MoveDirection.Top);
+      snake.changeMoveDirection(Shared.Types.MoveDirection.Top);
 
       snake.move();
       snake.move();
@@ -103,8 +88,6 @@ describe("class Snake", () => {
     });
 
     test("when direction is bottom", () => {
-      const snakeCtx = createSnakeCtx();
-
       const initialSnakeCoordinates = List.from([
         new Coordinate({ x: 30, y: 50 }),
         new Coordinate({ x: 30, y: 40 }),
@@ -117,9 +100,9 @@ describe("class Snake", () => {
         new Coordinate({ x: 30, y: 50 }),
       ]);
 
-      const snake = new Snake(snakeCtx, initialSnakeCoordinates, snakeStepSize);
+      const snake = Shared.TestUtils.snakeFactory(initialSnakeCoordinates);
 
-      snake.changeMoveDirection(shared.types.MoveDirection.Bottom);
+      snake.changeMoveDirection(Shared.Types.MoveDirection.Bottom);
 
       snake.move();
       snake.move();

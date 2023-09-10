@@ -1,9 +1,9 @@
-import { shared } from "../shared";
+import { Shared } from "../shared";
 
-export class ControllerFactory extends shared.types.AbstractController {
-  private readonly controllers: shared.types.AbstractController[];
+export class ControllerFactory extends Shared.Types.AbstractController {
+  private readonly controllers: Shared.Types.AbstractController[];
 
-  constructor(controllers: shared.types.AbstractController[]) {
+  constructor(controllers: Shared.Types.AbstractController[]) {
     super();
 
     this.controllers = controllers;

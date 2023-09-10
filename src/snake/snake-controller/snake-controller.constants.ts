@@ -1,4 +1,4 @@
-import { shared } from "../../shared";
+import { Shared } from "../../shared";
 
 export enum ARROW_KEY_CODE {
   LEFT = "ArrowLeft",
@@ -8,8 +8,8 @@ export enum ARROW_KEY_CODE {
 }
 
 export const MAP_ARROW_KEY_CODE_TO_DIRECTION = {
-  [ARROW_KEY_CODE.LEFT]: shared.types.MoveDirection.Left,
-  [ARROW_KEY_CODE.TOP]: shared.types.MoveDirection.Top,
-  [ARROW_KEY_CODE.RIGHT]: shared.types.MoveDirection.Right,
-  [ARROW_KEY_CODE.BOTTOM]: shared.types.MoveDirection.Bottom,
+  [ARROW_KEY_CODE.LEFT]: Shared.Types.MoveDirection.Left,
+  [ARROW_KEY_CODE.TOP]: Shared.Types.MoveDirection.Top,
+  [ARROW_KEY_CODE.RIGHT]: Shared.Types.MoveDirection.Right,
+  [ARROW_KEY_CODE.BOTTOM]: Shared.Types.MoveDirection.Bottom,
 };

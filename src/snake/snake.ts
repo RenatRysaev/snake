@@ -1,30 +1,30 @@
 import { List } from "linked-list";
 import { Coordinate } from "../coordinate";
-import { shared } from "../shared";
+import { Shared } from "../shared";
 import { Figure } from "../figure";
 
-export class Snake extends Figure {
+export class Snake {
+  private readonly Figure: Figure;
   private readonly stepSize: number;
   public coordinates: List<Coordinate>;
   public width: number;
   public height: number;
-  public moveDirection: shared.types.MoveDirection;
+  public moveDirection: Shared.Types.MoveDirection;
 
   constructor(
-    ctx: CanvasRenderingContext2D,
+    Figure: Figure,
     initialCoordinates: List<Coordinate>,
     stepSize: number,
   ) {
-    super(ctx);
-
+    this.Figure = Figure;
     this.coordinates = initialCoordinates;
     this.width = 100;
     this.height = 10;
     this.stepSize = stepSize;
-    this.moveDirection = shared.types.MoveDirection.Right;
+    this.moveDirection = Shared.Types.MoveDirection.Right;
   }
 
-  public changeMoveDirection(moveDirection: shared.types.MoveDirection) {
+  public changeMoveDirection(moveDirection: Shared.Types.MoveDirection) {
     this.moveDirection = moveDirection;
   }
 
@@ -32,28 +32,28 @@ export class Snake extends Figure {
     const headCoordinates = this.coordinates.head as Coordinate;
     let newHeadCoordinates = null;
 
-    if (this.moveDirection === shared.types.MoveDirection.Right) {
+    if (this.moveDirection === Shared.Types.MoveDirection.Right) {
       newHeadCoordinates = new Coordinate({
         x: headCoordinates.value.x + this.stepSize,
         y: headCoordinates.value.y,
       });
     }
 
-    if (this.moveDirection === shared.types.MoveDirection.Left) {
+    if (this.moveDirection === Shared.Types.MoveDirection.Left) {
       newHeadCoordinates = new Coordinate({
         x: headCoordinates.value.x - this.stepSize,
         y: headCoordinates.value.y,
       });
     }
 
-    if (this.moveDirection === shared.types.MoveDirection.Bottom) {
+    if (this.moveDirection === Shared.Types.MoveDirection.Bottom) {
       newHeadCoordinates = new Coordinate({
         x: headCoordinates.value.x,
         y: headCoordinates.value.y + this.stepSize,
       });
     }
 
-    if (this.moveDirection === shared.types.MoveDirection.Top) {
+    if (this.moveDirection === Shared.Types.MoveDirection.Top) {
       newHeadCoordinates = new Coordinate({
         x: headCoordinates.value.x,
         y: headCoordinates.value.y - this.stepSize,
@@ -69,7 +69,7 @@ export class Snake extends Figure {
     if (tail) {
       tail.detach();
 
-      this.removePart({
+      this.Figure.removeDrewPart({
         x: tail?.value.x,
         y: tail?.value.y,
         width: 10,
@@ -83,7 +83,7 @@ export class Snake extends Figure {
     this.removeLastPart();
 
     this.coordinates.toArray().forEach((coordinate) => {
-      this.render({
+      this.Figure.draw({
         x: coordinate.value.x,
         y: coordinate.value.y,
         width: 10,

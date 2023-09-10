@@ -1,9 +1,11 @@
 import { List } from "linked-list";
 import { ControllerFactory } from "./controller-factory";
 import { Game, GameController } from "./game";
-import { Display } from "./display";
+import { Engine } from "./engine";
 import { Snake, SnakeController } from "./snake";
 import { Coordinate } from "./coordinate";
+import { Screen } from "./screen";
+import { Figure } from "./figure";
 
 const initialSnakeCoordinates = List.from([
   new Coordinate({ x: 90, y: 30 }),
@@ -19,18 +21,22 @@ const initialSnakeCoordinates = List.from([
 ]);
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-const snakeCtx = canvas.getContext("2d") as CanvasRenderingContext2D;
+const startButton = document.getElementById("start_game") as HTMLButtonElement;
 
-const snake = new Snake(snakeCtx, initialSnakeCoordinates, 10);
-const display = new Display(snake);
-const game = new Game(display);
+const screen = new Screen(startButton, canvas);
 
-const mainController = new ControllerFactory([
-  new GameController(
-    document.getElementById("start-game") as HTMLButtonElement,
-    game,
-  ),
+const snake = new Snake(
+  new Figure(screen.snakeRenderingContext),
+  initialSnakeCoordinates,
+  10,
+);
+
+const engine = new Engine(snake);
+const game = new Game(engine);
+
+const appController = new ControllerFactory([
+  new GameController(game, screen),
   new SnakeController(snake),
 ]);
 
-mainController.registerHandlers();
+appController.registerHandlers();

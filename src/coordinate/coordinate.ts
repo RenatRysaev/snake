@@ -1,9 +1,9 @@
 import { Item } from "linked-list";
-import { shared } from "../shared";
+import { Shared } from "../shared";
 
 export class Coordinate extends Item {
-  public readonly value: shared.types.CoordinateType;
-  constructor(value: shared.types.CoordinateType) {
+  public readonly value: Shared.Types.CoordinateType;
+  constructor(value: Shared.Types.CoordinateType) {
     super();
     this.value = value;
   }

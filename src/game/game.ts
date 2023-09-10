@@ -1,9 +1,9 @@
-import { Display } from "../display";
+import { Engine } from "../engine";
 
 export class Game {
-  private readonly display: Display;
+  private readonly display: Engine;
 
-  constructor(display: Display) {
+  constructor(display: Engine) {
     this.display = display;
   }
   public start() {

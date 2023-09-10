@@ -1,22 +1,24 @@
-import { shared } from "../shared";
+import { Shared } from "../shared";
 import { Game } from "../game";
+import { Screen } from "../screen";
 
-export class GameController extends shared.types.AbstractController {
-  private readonly startButton: HTMLButtonElement;
+export class GameController extends Shared.Types.AbstractController {
   private readonly game: Game;
+  private readonly screen: Screen;
 
-  constructor(startButton: HTMLButtonElement, game: Game) {
+  constructor(game: Game, screen: Screen) {
     super();
 
-    this.startButton = startButton;
     this.game = game;
+    this.screen = screen;
   }
 
   private handleStartGame = () => {
+    this.screen.handleStartGame();
     this.game.start();
   };
 
   public registerHandlers = () => {
-    this.startButton.addEventListener("click", this.handleStartGame);
+    this.screen.startButton.addEventListener("click", this.handleStartGame);
   };
 }
