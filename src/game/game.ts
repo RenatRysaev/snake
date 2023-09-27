@@ -7,7 +7,6 @@ export class Game {
     this.display = display;
   }
   public start() {
-    console.log("start");
     this.display.render();
   }
 

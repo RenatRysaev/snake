@@ -27,6 +27,7 @@ const screen = new Screen(startButton, canvas);
 
 const snake = new Snake(
   new Figure(screen.snakeRenderingContext),
+  screen,
   initialSnakeCoordinates,
   10,
 );

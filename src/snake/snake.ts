@@ -2,9 +2,11 @@ import { List } from "linked-list";
 import { Coordinate } from "../coordinate";
 import { Shared } from "../shared";
 import { Figure } from "../figure";
+import { Screen } from "../screen";
 
 export class Snake {
   private readonly Figure: Figure;
+  private readonly Screen: Screen;
   private readonly stepSize: number;
   public coordinates: List<Coordinate>;
   public width: number;
@@ -13,10 +15,12 @@ export class Snake {
 
   constructor(
     Figure: Figure,
+    Screen: Screen,
     initialCoordinates: List<Coordinate>,
     stepSize: number,
   ) {
     this.Figure = Figure;
+    this.Screen = Screen;
     this.coordinates = initialCoordinates;
     this.width = 100;
     this.height = 10;
@@ -32,32 +36,68 @@ export class Snake {
     const headCoordinates = this.coordinates.head as Coordinate;
     let newHeadCoordinates = null;
 
+    const playgroundWidth = this.Screen.canvas.width;
+    const playgroundHeight = this.Screen.canvas.height;
+
+    const isSnakeHeadOutsidePlaygroundByX =
+      headCoordinates.value.x < 0 || headCoordinates.value.x > playgroundWidth;
+    const isSnakeHeadOutsidePlaygroundByY =
+      headCoordinates.value.y < 0 || headCoordinates.value.y > playgroundHeight;
+
     if (this.moveDirection === Shared.Types.MoveDirection.Right) {
-      newHeadCoordinates = new Coordinate({
-        x: headCoordinates.value.x + this.stepSize,
-        y: headCoordinates.value.y,
-      });
+      if (isSnakeHeadOutsidePlaygroundByX) {
+        newHeadCoordinates = new Coordinate({
+          x: 0,
+          y: headCoordinates.value.y,
+        });
+      } else {
+        newHeadCoordinates = new Coordinate({
+          x: headCoordinates.value.x + this.stepSize,
+          y: headCoordinates.value.y,
+        });
+      }
     }
 
     if (this.moveDirection === Shared.Types.MoveDirection.Left) {
-      newHeadCoordinates = new Coordinate({
-        x: headCoordinates.value.x - this.stepSize,
-        y: headCoordinates.value.y,
-      });
+      if (isSnakeHeadOutsidePlaygroundByX) {
+        newHeadCoordinates = new Coordinate({
+          x: playgroundWidth,
+          y: headCoordinates.value.y,
+        });
+      } else {
+        newHeadCoordinates = new Coordinate({
+          x: headCoordinates.value.x - this.stepSize,
+          y: headCoordinates.value.y,
+        });
+      }
     }
 
     if (this.moveDirection === Shared.Types.MoveDirection.Bottom) {
-      newHeadCoordinates = new Coordinate({
-        x: headCoordinates.value.x,
-        y: headCoordinates.value.y + this.stepSize,
-      });
+      if (isSnakeHeadOutsidePlaygroundByY) {
+        newHeadCoordinates = new Coordinate({
+          x: headCoordinates.value.x,
+          y: 0,
+        });
+      } else {
+        newHeadCoordinates = new Coordinate({
+          x: headCoordinates.value.x,
+          y: headCoordinates.value.y + this.stepSize,
+        });
+      }
     }
 
     if (this.moveDirection === Shared.Types.MoveDirection.Top) {
-      newHeadCoordinates = new Coordinate({
-        x: headCoordinates.value.x,
-        y: headCoordinates.value.y - this.stepSize,
-      });
+      if (isSnakeHeadOutsidePlaygroundByY) {
+        newHeadCoordinates = new Coordinate({
+          x: headCoordinates.value.x,
+          y: playgroundHeight,
+        });
+      } else {
+        newHeadCoordinates = new Coordinate({
+          x: headCoordinates.value.x,
+          y: headCoordinates.value.y - this.stepSize,
+        });
+      }
     }
 
     this.coordinates.prepend(newHeadCoordinates);
