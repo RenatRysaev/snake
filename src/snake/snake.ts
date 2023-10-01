@@ -119,6 +119,17 @@ export class Snake {
     }
   }
 
+  public isEqualToHeadCoordinate(
+    coordinate: Shared.Types.CoordinateType,
+  ): boolean {
+    const headCoordinates = this.coordinates.head as Coordinate;
+
+    return (
+      headCoordinates.value.x === coordinate.x &&
+      headCoordinates.value.y === coordinate.y
+    );
+  }
+
   public move() {
     this.changeCoordinates();
     this.removeLastPart();

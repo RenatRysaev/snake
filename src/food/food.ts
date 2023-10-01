@@ -5,25 +5,40 @@ export class Food {
   private readonly Figure: Figure;
   private readonly playgroundSize: Shared.Types.Size;
 
-  public coordinate: Shared.Types.CoordinateType | null;
+  private _coordinate: Shared.Types.CoordinateType | null;
 
   constructor(Figure: Figure, playgroundSize: Shared.Types.Size) {
     this.Figure = Figure;
     this.playgroundSize = playgroundSize;
 
-    this.coordinate = null;
+    this._coordinate = null;
   }
 
   public generateConsideringForbiddenCoordinates = (
     forbiddenCoordinates: Shared.Types.CoordinateType[],
   ) => {
-    const coordinate = this.getRandomCoordinate(forbiddenCoordinates);
-    this.setCoordinate(coordinate);
-    this.render(coordinate);
+    const randomCoordinate = this.getRandomCoordinate(forbiddenCoordinates);
+    this.setCoordinate(randomCoordinate);
+    this.render(randomCoordinate);
   };
 
-  private setCoordinate = (coordinate: Shared.Types.CoordinateType) => {
-    this.coordinate = coordinate;
+  public delete = () => {
+    this.Figure.removeDrewPart({
+      x: this._coordinate?.x as number,
+      y: this._coordinate?.y as number,
+      width: 10,
+      height: 10,
+    });
+
+    this.setCoordinate(null);
+  };
+
+  public setCoordinate = (coordinate: Shared.Types.CoordinateType | null) => {
+    this._coordinate = coordinate;
+  };
+
+  public getCoordinate = (): Shared.Types.CoordinateType | null => {
+    return this._coordinate;
   };
 
   private getRandomCoordinate = (
@@ -33,8 +48,8 @@ export class Food {
       Math.floor(Math.random() * max);
 
     const randomCoordinate = {
-      x: getRandomInt(this.playgroundSize.width),
-      y: getRandomInt(this.playgroundSize.height),
+      x: getRandomInt(this.playgroundSize.width / 10) * 10,
+      y: getRandomInt(this.playgroundSize.height / 10) * 10,
     };
 
     if (

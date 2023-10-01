@@ -20,17 +20,31 @@ export class Engine {
     }, 60);
   }
 
-  private tick() {
-    // const adaptedSnakeCoordinates = this.Snake.coordinates
-    //   .toArray()
-    //   .map((coordinate) => coordinate.value);
+  private runFoodLogic() {
+    const foodCoordinate = this.Food.getCoordinate();
 
-    // this.Food.generateConsideringForbiddenCoordinates(adaptedSnakeCoordinates);
-    console.log(this.Food);
+    const snakeCoordinates = this.Snake.coordinates
+      .toArray()
+      .map((coordinate) => coordinate.value);
 
-    // нужно чтобы на экране была только 1 еда, поэтому здесь нужно реализовать механизм проверки
-    // съела ли змея еду(пересеклась ли началом с едой), если пересеклась - удалять текущую еду и сгенерировать новую
+    if (!foodCoordinate) {
+      this.Food.generateConsideringForbiddenCoordinates(snakeCoordinates);
+      return;
+    }
 
+    const isSnakeAteFood = this.Snake.isEqualToHeadCoordinate(foodCoordinate);
+
+    if (isSnakeAteFood) {
+      this.Food.delete();
+    }
+  }
+
+  private runSnakeLogic = () => {
     this.Snake.move();
+  };
+
+  private tick() {
+    this.runFoodLogic();
+    this.runSnakeLogic();
   }
 }
