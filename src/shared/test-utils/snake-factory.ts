@@ -1,19 +1,21 @@
 import { List } from "linked-list";
 import { Coordinate } from "../../coordinate";
-import { Screen } from "../../screen";
 import { Snake } from "../../snake";
 import { Figure } from "../../figure";
 
 export const snakeFactory = (coordinates: List<Coordinate>) => {
   const canvas = document.createElement("canvas");
-  const startButton = document.createElement("button");
-  const appScreen = new Screen(startButton, canvas);
 
   const snakeStepSize = 10;
+  const playgroundSize = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
 
   return new Snake(
-    new Figure(appScreen.snakeRenderingContext),
     coordinates,
     snakeStepSize,
+    playgroundSize,
+    new Figure(canvas.getContext("2d") as CanvasRenderingContext2D),
   );
 };

@@ -3,22 +3,22 @@ import { Game } from "../game";
 import { Screen } from "../screen";
 
 export class GameController extends Shared.Types.AbstractController {
-  private readonly game: Game;
-  private readonly screen: Screen;
+  private readonly Game: Game;
+  private readonly Screen: Screen;
 
-  constructor(game: Game, screen: Screen) {
+  constructor(Game: Game, Screen: Screen) {
     super();
 
-    this.game = game;
-    this.screen = screen;
+    this.Game = Game;
+    this.Screen = Screen;
   }
 
   private handleStartGame = () => {
-    this.screen.handleStartGame();
-    this.game.start();
+    this.Screen.hideStartButton();
+    this.Game.start();
   };
 
   public registerHandlers = () => {
-    this.screen.startButton.addEventListener("click", this.handleStartGame);
+    this.Screen.startButton.addEventListener("click", this.handleStartGame);
   };
 }

@@ -1,19 +1,36 @@
 import { Snake } from "../snake";
+import { Food } from "../food";
 
 export class Engine {
-  private snake: Snake;
+  private Snake: Snake;
+  private Food: Food;
 
-  constructor(snake: Snake) {
-    this.snake = snake;
+  constructor(Snake: Snake, Food: Food) {
+    this.Snake = Snake;
+    this.Food = Food;
   }
 
-  public render() {
-    this.snake.move();
+  public loop() {
+    this.tick();
 
-    const snakeInterval = window.setInterval(() => {
-      this.render();
+    const interval = window.setInterval(() => {
+      this.loop();
 
-      window.clearInterval(snakeInterval);
+      window.clearInterval(interval);
     }, 60);
+  }
+
+  private tick() {
+    // const adaptedSnakeCoordinates = this.Snake.coordinates
+    //   .toArray()
+    //   .map((coordinate) => coordinate.value);
+
+    // this.Food.generateConsideringForbiddenCoordinates(adaptedSnakeCoordinates);
+    console.log(this.Food);
+
+    // нужно чтобы на экране была только 1 еда, поэтому здесь нужно реализовать механизм проверки
+    // съела ли змея еду(пересеклась ли началом с едой), если пересеклась - удалять текущую еду и сгенерировать новую
+
+    this.Snake.move();
   }
 }

@@ -2,29 +2,30 @@ import { List } from "linked-list";
 import { Coordinate } from "../coordinate";
 import { Shared } from "../shared";
 import { Figure } from "../figure";
-import { Screen } from "../screen";
 
 export class Snake {
   private readonly Figure: Figure;
-  private readonly Screen: Screen;
   private readonly stepSize: number;
+  private readonly playgroundSize: Shared.Types.Size;
+
   public coordinates: List<Coordinate>;
   public width: number;
   public height: number;
   public moveDirection: Shared.Types.MoveDirection;
 
   constructor(
-    Figure: Figure,
-    Screen: Screen,
     initialCoordinates: List<Coordinate>,
     stepSize: number,
+    playgroundSize: Shared.Types.Size,
+    Figure: Figure,
   ) {
     this.Figure = Figure;
-    this.Screen = Screen;
+    this.stepSize = stepSize;
+    this.playgroundSize = playgroundSize;
+
     this.coordinates = initialCoordinates;
     this.width = 100;
     this.height = 10;
-    this.stepSize = stepSize;
     this.moveDirection = Shared.Types.MoveDirection.Right;
   }
 
@@ -36,13 +37,13 @@ export class Snake {
     const headCoordinates = this.coordinates.head as Coordinate;
     let newHeadCoordinates = null;
 
-    const playgroundWidth = this.Screen.canvas.width;
-    const playgroundHeight = this.Screen.canvas.height;
-
     const isSnakeHeadOutsidePlaygroundByX =
-      headCoordinates.value.x < 0 || headCoordinates.value.x > playgroundWidth;
+      headCoordinates.value.x < 0 ||
+      headCoordinates.value.x > this.playgroundSize.width;
+
     const isSnakeHeadOutsidePlaygroundByY =
-      headCoordinates.value.y < 0 || headCoordinates.value.y > playgroundHeight;
+      headCoordinates.value.y < 0 ||
+      headCoordinates.value.y > this.playgroundSize.height;
 
     if (this.moveDirection === Shared.Types.MoveDirection.Right) {
       if (isSnakeHeadOutsidePlaygroundByX) {
@@ -61,7 +62,7 @@ export class Snake {
     if (this.moveDirection === Shared.Types.MoveDirection.Left) {
       if (isSnakeHeadOutsidePlaygroundByX) {
         newHeadCoordinates = new Coordinate({
-          x: playgroundWidth,
+          x: this.playgroundSize.width,
           y: headCoordinates.value.y,
         });
       } else {
@@ -90,7 +91,7 @@ export class Snake {
       if (isSnakeHeadOutsidePlaygroundByY) {
         newHeadCoordinates = new Coordinate({
           x: headCoordinates.value.x,
-          y: playgroundHeight,
+          y: this.playgroundSize.height,
         });
       } else {
         newHeadCoordinates = new Coordinate({

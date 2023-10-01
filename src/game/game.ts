@@ -1,13 +1,13 @@
 import { Engine } from "../engine";
 
 export class Game {
-  private readonly display: Engine;
+  private readonly Engine: Engine;
 
-  constructor(display: Engine) {
-    this.display = display;
+  constructor(Engine: Engine) {
+    this.Engine = Engine;
   }
   public start() {
-    this.display.render();
+    this.Engine.loop();
   }
 
   public stop() {}

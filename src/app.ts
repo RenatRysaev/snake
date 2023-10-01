@@ -6,6 +6,12 @@ import { Snake, SnakeController } from "./snake";
 import { Coordinate } from "./coordinate";
 import { Screen } from "./screen";
 import { Figure } from "./figure";
+import { Food } from "./food";
+
+const playgroundSize = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
 
 const initialSnakeCoordinates = List.from([
   new Coordinate({ x: 90, y: 30 }),
@@ -21,18 +27,22 @@ const initialSnakeCoordinates = List.from([
 ]);
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
 const startButton = document.getElementById("start_game") as HTMLButtonElement;
 
-const screen = new Screen(startButton, canvas);
-
 const snake = new Snake(
-  new Figure(screen.snakeRenderingContext),
-  screen,
   initialSnakeCoordinates,
   10,
+  playgroundSize,
+  new Figure(canvasContext),
 );
 
-const engine = new Engine(snake);
+const food = new Food(new Figure(canvasContext), playgroundSize);
+
+const screen = new Screen(canvas, startButton);
+screen.setPlaygroundSize(playgroundSize.width, playgroundSize.height);
+
+const engine = new Engine(snake, food);
 const game = new Game(engine);
 
 const appController = new ControllerFactory([
