@@ -41,6 +41,16 @@ export class Engine {
 
   private runSnakeLogic = () => {
     this.Snake.move();
+
+    const foodCoordinate = this.Food.getCoordinate();
+
+    if (foodCoordinate) {
+      const isSnakeAteFood = this.Snake.isEqualToHeadCoordinate(foodCoordinate);
+
+      if (isSnakeAteFood) {
+        this.Snake.grow();
+      }
+    }
   };
 
   private tick() {

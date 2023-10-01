@@ -14,13 +14,13 @@ export class SnakeController extends Shared.Types.AbstractController {
   private handleChangeDirection = (event: KeyboardEvent) => {
     const MAP_DIRECTION_TO_HANDLER = {
       [Shared.Types.MoveDirection.Left]: () =>
-        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Left),
+        this.snake.setMoveDirection(Shared.Types.MoveDirection.Left),
       [Shared.Types.MoveDirection.Top]: () =>
-        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Top),
+        this.snake.setMoveDirection(Shared.Types.MoveDirection.Top),
       [Shared.Types.MoveDirection.Right]: () =>
-        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Right),
+        this.snake.setMoveDirection(Shared.Types.MoveDirection.Right),
       [Shared.Types.MoveDirection.Bottom]: () =>
-        this.snake.changeMoveDirection(Shared.Types.MoveDirection.Bottom),
+        this.snake.setMoveDirection(Shared.Types.MoveDirection.Bottom),
     };
 
     const pressedKeyCode = event.code;

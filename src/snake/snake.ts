@@ -29,11 +29,11 @@ export class Snake {
     this.moveDirection = Shared.Types.MoveDirection.Right;
   }
 
-  public changeMoveDirection(moveDirection: Shared.Types.MoveDirection) {
+  public setMoveDirection = (moveDirection: Shared.Types.MoveDirection) => {
     this.moveDirection = moveDirection;
-  }
+  };
 
-  private changeCoordinates() {
+  private changeCoordinates = () => {
     const headCoordinates = this.coordinates.head as Coordinate;
     let newHeadCoordinates = null;
 
@@ -102,9 +102,9 @@ export class Snake {
     }
 
     this.coordinates.prepend(newHeadCoordinates);
-  }
+  };
 
-  private removeLastPart() {
+  private removeLastPart = () => {
     const tail = this.coordinates.tail;
 
     if (tail) {
@@ -117,20 +117,56 @@ export class Snake {
         height: 10,
       });
     }
-  }
+  };
 
-  public isEqualToHeadCoordinate(
+  public isEqualToHeadCoordinate = (
     coordinate: Shared.Types.CoordinateType,
-  ): boolean {
+  ): boolean => {
     const headCoordinates = this.coordinates.head as Coordinate;
 
     return (
       headCoordinates.value.x === coordinate.x &&
       headCoordinates.value.y === coordinate.y
     );
-  }
+  };
 
-  public move() {
+  public grow = () => {
+    const tail = this.coordinates.tail as Coordinate;
+
+    let newTail = null;
+
+    if (this.moveDirection === Shared.Types.MoveDirection.Right) {
+      newTail = new Coordinate({
+        x: tail.value.x - this.stepSize,
+        y: tail.value.y,
+      });
+    }
+
+    if (this.moveDirection === Shared.Types.MoveDirection.Left) {
+      newTail = new Coordinate({
+        x: tail.value.x + this.stepSize,
+        y: tail.value.y,
+      });
+    }
+
+    if (this.moveDirection === Shared.Types.MoveDirection.Top) {
+      newTail = new Coordinate({
+        x: tail.value.x,
+        y: tail.value.y - this.stepSize,
+      });
+    }
+
+    if (this.moveDirection === Shared.Types.MoveDirection.Bottom) {
+      newTail = new Coordinate({
+        x: tail.value.x,
+        y: tail.value.y + this.stepSize,
+      });
+    }
+
+    this.coordinates.append(newTail);
+  };
+
+  public move = () => {
     this.changeCoordinates();
     this.removeLastPart();
 
@@ -142,5 +178,5 @@ export class Snake {
         height: 10,
       });
     });
-  }
+  };
 }
